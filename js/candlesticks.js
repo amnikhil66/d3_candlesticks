@@ -27,6 +27,7 @@ var buildCandlesticks = function(data){
     var y = d3.scale.linear()
         .domain([d3.min(data.map(function(x){ return x["Low"]; })), d3.max(data.map(function(x){ return x["High"]; }))])
         .range([height-margin, margin]);
+        
     var x = d3.scale.linear()
         .domain([d3.min(data.map(function(d){ return d.timestamp; })),d3.max(data.map(function(d){ return d.timestamp; }))])
         .range([margin,width-margin]);
