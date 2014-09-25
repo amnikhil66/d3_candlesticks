@@ -14,7 +14,7 @@ var max = function(a, b){
 };
 
 var buildCandlesticks = function(data){
-    var margin = '50';
+    var margin = 50;
 
     var chart = d3.select("#chart")
         .append("svg:svg")
@@ -25,12 +25,12 @@ var buildCandlesticks = function(data){
         .attr("preserveAspectRatio", "xMidYMid");
 
     var y = d3.scale.linear()
-        .domain([d3.min(data.map(function(x){ return x["Low"]; })), d3.max(data.map(function(x){ return x["High"]; }))])
-        .range([height-margin, margin]);
+        .domain([d3.min(data.map(function(x){ return x["Low"]; })) - 10, d3.max(data.map(function(x){ return x["High"]; }))])
+        .range([height-margin, 0]);
         
     var x = d3.scale.linear()
         .domain([d3.min(data.map(function(d){ return d.timestamp; })),d3.max(data.map(function(d){ return d.timestamp; }))])
-        .range([margin,width-margin]);
+        .range([80, width-margin]);
 
     chart.append("svg:line")
         .attr("class", "x")
