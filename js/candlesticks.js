@@ -76,7 +76,7 @@ var buildCandlesticks = function(data){
         .attr("y", function(d) {return y(max(d.Open, d.Close));})     
         .attr("height", function(d) { return y(min(d.Open, d.Close))-y(max(d.Open, d.Close));})
         .attr("width", function(d) { return 0.5 * (width - 2*margin)/data.length; })
-        .attr("fill",function(d) { return d.Open > d.Close ? "red" : "green" ;});
+        .attr("fill",function(d) { return d.Open > d.Close ? "#ec3232" : "#1bc45b" ;});
 
     chart.selectAll("line.stem")
         .data(data)
@@ -86,7 +86,7 @@ var buildCandlesticks = function(data){
         .attr("x2", function(d) { return x(d.timestamp) + 0.25 * (width - 2 * margin)/ data.length;})       
         .attr("y1", function(d) { return y(d.High);})
         .attr("y2", function(d) { return y(d.Low); })
-        .attr("stroke", function(d){ return d.Open > d.Close ? "red" : "green"; });
+        .attr("stroke", function(d){ return d.Open > d.Close ? "#ec3232" : "#1bc45b"; });
 
     $(window).on("resize", function(){
         var width = $("#chart").parent().width();
