@@ -1,0 +1,1 @@
+ccCandlesticks("#chart", "js/data/candlesticks.json");
