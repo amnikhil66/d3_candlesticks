@@ -25,7 +25,6 @@ var ccCandlesticks = function(id, url){
             .attr("viewBox", "0 0 " + width + " " + height)
             .attr("preserveAspectRatio", "xMidYMid");
 
-        drawCandlesticks();
     };
 
     var drawCandlesticks = function(){
@@ -74,19 +73,23 @@ var ccCandlesticks = function(id, url){
             .attr("text-anchor", "middle")
             .text(String);
 
-        candlestickGraph.selectAll("rect")
+        candlestickGraph.selectAll("rect.real-body")
             .data(data)
             .enter().append("svg:rect")
+            .attr("class", "real-body")
             .attr("x", function(d) { return x(d.timestamp); })
             .attr("y", function(d) { return y(max(d.Open, d.Close)); })
-            .attr("height", function(d) { return y(min(d.Open, d.Close)) - y(max(d.Open, d.Close));})
             .attr("width", function(d) { return 0.5 * (width - 2 * margin) / data.length; })
-            .attr("fill",function(d) { return d.Open > d.Close ? "#ec3232" : "#1bc45b" ;});
+            .attr("fill",function(d) { return d.Open > d.Close ? "#ec3232" : "#1bc45b" ;})
+            .transition()
+            .delay(function(d, i){ console.log(d); console.log(i); return i * 1000; })
+            .duration(1000)
+            .attr("height", function(d) { return y(min(d.Open, d.Close)) - y(max(d.Open, d.Close));});
 
-        candlestickGraph.selectAll("line.stem")
+        candlestickGraph.selectAll("line.shadow")
             .data(data)
             .enter().append("svg:line")
-            .attr("class", "stem")
+            .attr("class", "shadow")
             .attr("x1", function(d) { return x(d.timestamp) + 0.25 * (width - 2 * margin)/ data.length;})
             .attr("x2", function(d) { return x(d.timestamp) + 0.25 * (width - 2 * margin)/ data.length;})       
             .attr("y1", function(d) { return y(d.High);})
@@ -101,7 +104,7 @@ var ccCandlesticks = function(id, url){
 
         data = json.sort(function(x, y){ return x.timestamp - y.timestamp; });
 
-        darwGraph();
+        drawCandlesticks();
     };
 
     var fetchData = function(){
@@ -118,6 +121,7 @@ var ccCandlesticks = function(id, url){
     });
 
     fetchData();
+    darwGraph();
 
     return candlestickGraph;
 };
