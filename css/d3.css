@@ -1,0 +1,14 @@
+svg {
+	font: 16px;
+}
+
+.axis text {
+	font: 0.8em sans-serif;
+}
+
+.axis line,
+.axis path {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
