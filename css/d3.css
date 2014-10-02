@@ -3,11 +3,11 @@ svg {
 }
 
 .axis text {
-	font: 0.8em sans-serif;
+	font: 0.9em sans-serif;
 }
 
 .axis line,
-.axis path {
+.axis path 	{
 	fill: none;
 	stroke: #000;
 	shape-rendering: crispEdges;

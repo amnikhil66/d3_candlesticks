@@ -1,1 +1,1 @@
-ccCandlesticks("#chart", "js/data/candlesticks.json");
+var a = ccCandlesticks("#chart", "js/data/candlesticks.json");
