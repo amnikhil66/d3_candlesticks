@@ -1,1 +1,5 @@
-var a = ccCandlesticks("#chart", "js/data/candlesticks.json");
+ccCandlesticks({
+	id: "#chart",
+	url: "js/data/candlesticks.json",
+	refresh_rate: 2000
+});

@@ -2,8 +2,9 @@ svg {
 	font: 16px;
 }
 
-.axis text {
-	font: 0.9em sans-serif;
+.axis text,
+.label {
+	font: 0.65em sans-serif;
 }
 
 .axis line,
