@@ -53,10 +53,10 @@
                 .text("PiPs");
 
             window.addEventListener("resize", function(event){
-                var width = parseInt(svgContainer.style("width"));
+                var width = parseInt(svgContainer.style("width")),
+                    height = width / aspect;
 
-                candlestickGraph.attr("height", width / aspect);
-                candlestickGraph.attr("width", width);
+                candlestickGraph.attr("height", height).attr("width", width);
             });
         };
 
