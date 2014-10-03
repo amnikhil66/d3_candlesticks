@@ -77,17 +77,7 @@
                         .scale(x).orient("bottom").tickFormat(d3.time.format("%d-%m-%y"));
         };
 
-        var drawCandlesticks = function(){
-            candlestickGraph.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0, "+ (height - margin) +")")
-                .call(xAxis);
-
-            candlestickGraph.append("g")
-                .attr("class", "y axis")
-                .attr("transform", "translate("+ 50 +", 0)")
-                .call(yAxis);
-            
+        var addNewCandlesticks = function(){
             realBodies.enter().append("rect")
                 .attr("class", "real-body")
                 .attr("x", function(d) { return x(new Date(d.Date)); })
@@ -106,6 +96,20 @@
                 .attr("stroke", function(d){ return d.Open > d.Close ? "#ec3232" : "#1bc45b"; });
         };
 
+        var drawCandlesticks = function(){
+            candlestickGraph.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0, "+ (height - margin) +")")
+                .call(xAxis);
+
+            candlestickGraph.append("g")
+                .attr("class", "y axis")
+                .attr("transform", "translate("+ 50 +", 0)")
+                .call(yAxis);
+            
+            addNewCandlesticks();
+        };
+
         var updateGraphData = function(){
             candlestickGraph.select("g.x").transition().duration(850).call(xAxis);
 
@@ -118,7 +122,6 @@
                 .attr("fill",function(d) { return d.Open > d.Close ? "#ec3232" : "#1bc45b" ;})
                 .attr("height", function(d) { return y(min(d.Open, d.Close)) - y(max(d.Open, d.Close));});
 
-            realBodies.exit().remove();
 
             shadows.transition().duration(850)
                 .attr("x1", function(d) { return x(new Date(d.Date)) + 0.25 * (width - 2 * margin)/ data.length;})
@@ -127,7 +130,11 @@
                 .attr("y2", function(d) { return y(d.Low); })
                 .attr("stroke", function(d){ return d.Open > d.Close ? "#ec3232" : "#1bc45b"; });
 
+
+            realBodies.exit().remove();
             shadows.exit().remove();
+            
+            addNewCandlesticks();
         };
 
         var appendTimestamp = function(json, flag){
@@ -143,8 +150,10 @@
         };
 
         var fetchData = function(flag){
-            d3.json(options.url, function(error, json){
-               appendTimestamp(json, flag);
+            var url = flag === "init" ? options.url : "js/data/candlesticks_2.json"
+            d3.json(url, function(error, json){
+                console.log(json);
+                appendTimestamp(json, flag);
             });
         };
 
