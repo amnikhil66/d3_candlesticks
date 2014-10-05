@@ -150,7 +150,7 @@
         };
 
         var fetchData = function(flag){
-            var url = flag === "init" ? options.url : "js/data/candlesticks_2.json"
+            var url = flag === "init" ? options.url : options.url + "?" + Math.floor(Math.random()*10000)
             d3.json(url, function(error, json){
                 appendTimestamp(json, flag);
             });
