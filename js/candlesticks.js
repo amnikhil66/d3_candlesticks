@@ -23,8 +23,7 @@
         var modDate = function(date_string, mod){
             var date = new Date(date_string);
 
-            mod === "yesterday" ? date.setDate(date.getDate() - 1) : date.setDate(date.getDate() + 1);
-
+            // mod === "yesterday" ? date.setMinutes(date.getMinutes() - 0) : date.setHours(date.getMinutes() + 0);
             return date;
         };
 
@@ -66,7 +65,7 @@
 
             y = d3.scale.linear()
                         .domain([d3.min(data.map(function(x){ return x["Low"]; })) - 10, d3.max(data.map(function(x){ return x["High"]; }))])
-                        .range([height-margin, 0]);            
+                        .range([height-margin, 0]);
             x = d3.time.scale()
                         .domain([modDate(data[0]["Date"], "yesterday"), modDate(data[data.length - 1]["Date"])])
                         .range([50, width-margin]);
@@ -74,7 +73,7 @@
             yAxis = d3.svg.axis()
                         .scale(y).orient("left");
             xAxis = d3.svg.axis()
-                        .scale(x).orient("bottom").tickFormat(d3.time.format("%d-%m-%y"));
+                        .scale(x).orient("bottom").ticks(5);
         };
 
         var addNewCandlesticks = function(){
@@ -139,7 +138,7 @@
 
         var appendTimestamp = function(json, flag){
             for(var i = 0; i < json.length; i++){
-                json[i].timestamp = (new Date(json[i].Date).getTime() / 1000);
+                json[i].timestamp = (new Date(json[i].Date).getTime());
             }
 
             data = json.sort(function(x, y){ return x.timestamp - y.timestamp; });
