@@ -21,9 +21,10 @@
         };
 
         var modDate = function(date_string, mod){
-            var date = new Date(date_string);
+            var date = new Date(date_string.replace(/\./g,"/"));
 
             // mod === "yesterday" ? date.setMinutes(date.getMinutes() - 0) : date.setHours(date.getMinutes() + 0);
+            console.log(date);
             return date;
         };
 
@@ -69,7 +70,6 @@
             x = d3.time.scale()
                         .domain([modDate(data[0]["Date"], "yesterday"), modDate(data[data.length - 1]["Date"])])
                         .range([50, width-margin]);
-
             yAxis = d3.svg.axis()
                         .scale(y).orient("left");
             xAxis = d3.svg.axis()
@@ -79,7 +79,7 @@
         var addNewCandlesticks = function(){
             realBodies.enter().append("rect")
                 .attr("class", "real-body")
-                .attr("x", function(d) { return x(new Date(d.Date)); })
+                .attr("x", function(d) { return x(modDate(d.Date)); })
                 .attr("y", function(d) { return y(max(d.Open, d.Close)); })
                 .attr("width", function(d) { return 0.5 * (width - 2 * margin) / data.length; })
                 .attr("fill",function(d) { return d.Open > d.Close ? "#ec3232" : "#1bc45b" ;})
@@ -88,8 +88,8 @@
 
             shadows.enter().append("line")
                 .attr("class", "shadow")
-                .attr("x1", function(d) { return x(new Date(d.Date)) + 0.25 * (width - 2 * margin)/ data.length;})
-                .attr("x2", function(d) { return x(new Date(d.Date)) + 0.25 * (width - 2 * margin)/ data.length;})       
+                .attr("x1", function(d) { return x(modDate(d.Date)) + 0.25 * (width - 2 * margin)/ data.length;})
+                .attr("x2", function(d) { return x(modDate(d.Date)) + 0.25 * (width - 2 * margin)/ data.length;})       
                 .attr("y1", function(d) { return y(d.High);})
                 .attr("y2", function(d) { return y(d.Low); })
                 .attr("stroke", function(d){ return d.Open > d.Close ? "#ec3232" : "#1bc45b"; });
@@ -115,7 +115,7 @@
             candlestickGraph.select("g.y").transition().duration(850).call(yAxis);
 
             realBodies.transition().duration(850)
-                .attr("x", function(d) { return x(new Date(d.Date)); })
+                .attr("x", function(d) { return x(modDate(d.Date)); })
                 .attr("y", function(d) { return y(max(d.Open, d.Close)); })
                 .attr("width", function(d) { return 0.5 * (width - 2 * margin) / data.length; })
                 .attr("fill",function(d) { return d.Open > d.Close ? "#ec3232" : "#1bc45b" ;})
@@ -123,8 +123,8 @@
 
 
             shadows.transition().duration(850)
-                .attr("x1", function(d) { return x(new Date(d.Date)) + 0.25 * (width - 2 * margin)/ data.length;})
-                .attr("x2", function(d) { return x(new Date(d.Date)) + 0.25 * (width - 2 * margin)/ data.length;})       
+                .attr("x1", function(d) { return x(modDate(d.Date)) + 0.25 * (width - 2 * margin)/ data.length;})
+                .attr("x2", function(d) { return x(modDate(d.Date)) + 0.25 * (width - 2 * margin)/ data.length;})       
                 .attr("y1", function(d) { return y(d.High);})
                 .attr("y2", function(d) { return y(d.Low); })
                 .attr("stroke", function(d){ return d.Open > d.Close ? "#ec3232" : "#1bc45b"; });
