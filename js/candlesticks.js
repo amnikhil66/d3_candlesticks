@@ -10,7 +10,7 @@
             data = [],
             flag = "init",
             realBodies = null, shadows = null, candlestickGraph = null,
-            y = null, x =null, xAxis = null, yAxis = null;
+            y = null, x =null, xAxis = null, yAxis = null, graph_interval = null;
 
         var min = function(a, b){
             return a < b ? a : b;
@@ -24,9 +24,20 @@
             var date = new Date(date_string.replace(/\./g,"/"));
 
             // mod === "yesterday" ? date.setMinutes(date.getMinutes() - 0) : date.setHours(date.getMinutes() + 0);
-            console.log(date);
             return date;
         };
+
+        var setGraphInterval = function(){
+            if(options.hasOwnProperty("refresh_rate")){
+                if (!!graph_interval) {
+                    clearInterval(graph_interval);
+                }
+                graph_interval = setInterval(function(){
+                    fetchData("update");
+                }, options.refresh_rate);
+            }
+        };
+
 
         var darwGraph = function(){
             candlestickGraph = svgContainer.append("svg:svg")
@@ -58,6 +69,8 @@
 
                 candlestickGraph.attr("height", height).attr("width", width);
             });
+
+            setGraphInterval();
         };
 
         var initGraphScale = function(){
@@ -149,20 +162,24 @@
         };
 
         var fetchData = function(flag){
-            var url = flag === "init" ? options.url : options.url + "?" + Math.floor(Math.random()*10000)
+            var url = flag === "init" ? options.url : options.url + "?" + Math.floor(Math.random()*10000);
+
             d3.json(url, function(error, json){
                 appendTimestamp(json, flag);
             });
         };
 
-        if(options.hasOwnProperty("refresh_rate")){
-            setInterval(function(){
-                fetchData("update");
-            }, options.refresh_rate);
-        }
-
+        var redrawGraph = function(url){
+            options.url = url;
+            fetchData("update");
+        };
+        
         darwGraph();
         fetchData("init");
+
+        return {
+            redrawGraph: redrawGraph
+        };
     };
 
     window.ccCandlesticks = ccCandlesticks;

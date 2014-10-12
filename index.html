@@ -9,6 +9,38 @@
         <link rel="stylesheet" href="css/d3.css">
     </head>
     <body>
+        <div id="candlestick_selectors">
+            <select name="candle_currency_selector_1" id="candle_currency_selector_1">
+                <option value="EUR" selected>EUR</option>
+                <option value="AUD">AUD</option>
+                <option value="CAD">CAD</option>
+                <option value="CHF">CHF</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="NZD">NZD</option>
+                <option value="USD">USD</option>
+            </select>
+            <select name="candle_currency_selector_2" id="candle_currency_selector_2">
+                <option value="EUR" disabled>EUR</option>
+                <option value="AUD" selected>AUD</option>
+                <option value="CAD">CAD</option>
+                <option value="CHF">CHF</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="NZD">NZD</option>
+                <option value="USD">USD</option>
+            </select>
+            <select name="candle_time_period_selector" id="candle_time_period_selector">
+                <option value="1" selected="">1 Min</option>
+                <option value="5">5 Mins</option>
+                <option value="15">15 Mins</option>
+                <option value="30">30 Mins</option>
+                <option value="60">1 Hour</option>
+                <option value="240">4 Hours</option>
+                <option value="1440">1 Day</option>
+                <option value="43200">1 Month</option>
+            </select>
+        </div>
         <div id="chart"></div>
 
         <script src="js/candlesticks.js"></script>
